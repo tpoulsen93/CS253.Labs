@@ -12,45 +12,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {...} ChrCat;
-typedef ChrCat ChrCats[...];
-static ChrCats chrcats={..., {0}};
-
-int charCount(char target, char *category)  //parameters will be char from stdin and category we are checking it against
+typedef struct 
 {
-    for (int c = 0; c < (sizeof(/*something*/) / sizeof(char)))
+    int count;          //number of matches in category
+    char *name;         //name of category
+    char *chars;        //characters in category
+} ChrCat;
+
+typedef ChrCat ChrCats[];
+static ChrCats chrcats={
+    {0, "Upper Vowels", "AEIOU"},
+    {0, "Lower Vowels", "aeiou"},
+    {0, "My First Name", "taylorTAYLOR"},
+    {0, "My Last Name", "poulsenPOULSEN"},
+    {0}};   //terminating 0
+
+void charCount(char targetChar, ChrCat category)
+{
+    for (int i = 0; i < sizeof(category.chars)/sizeof(char); i++)
     {
-        if (target == /*something*/)
-            return 1;
+        if (targetChar == category.chars[i])
+             category.count++;
     }
-    return 0;
 }
 
 int main()
 {
     char *line = 0;
     size_t n = 0;
-    int cat1 = 0;
-    int cat2 = 0;
-    int cat3 = 0;
 
     while (1) 
     {
+        //get data from stdin
         ssize_t length = getline(&line, &n, stdin);
 
         //terminate program if no input is given
         if (length <= 1)
             break;
 
-        //loop through characters checking for their types and counting them
+        //loop through character categories checking for their types and counting them
         for (int i = 0; i < length; i++)
         {
-            if (charCount(line[i], /*category 1*/) > 0)     //I'm thinking this it is going to look something like this
-                cat1++;
-            if (charCount(line[i], /*category 2*/) > 0)
-                cat2++;
-            if (charCount(line[i], /*category 3*/) > 0)
-                cat3++;
+           for (int c = 0; c < sizeof(chrcats)/sizeof(ChrCat); c++)
+           {
+                charCount(line[i], chrcats[c]);
+           }
+        }
+
+        for (int b = 0; b < sizeof(chrcats)/sizeof(ChrCat); b++)
+        {
+        printf("%s: %d\n",chrcats[b].name, chrcats[b].count);
+        chrcats[b].count = 0;       //reset counters for next iteration
         }
     }
+    free(line);
+    return 0;
 }
