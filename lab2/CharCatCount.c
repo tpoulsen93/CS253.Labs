@@ -27,15 +27,8 @@ static ChrCats chrcats={
     {0, "My Last Name", "poulsenPOULSEN"},
     {0}};   //terminating 0
 
-void charCount(char targetChar, ChrCat category)
+int charCount(char targetChar, ChrCat category)
 {
-/*    int categorySize = sizeof(category.chars) / sizeof(char);
-    for (int z = 0; z < categorySize; z++)
-    {
-        if (targetChar == category.chars[z])
-             category.count++;
-    }
-*/
     int z = 0;
     while (category.chars[z])
     {
@@ -43,6 +36,7 @@ void charCount(char targetChar, ChrCat category)
             category.count++;
         z++;
     }
+    return category.count;
 }
 
 int main()
@@ -65,7 +59,7 @@ int main()
         {
            while (chrcats[arrayIndex].name)     //continue looping if category.name != 0
            {
-                charCount(line[i], chrcats[arrayIndex]);
+                chrcats[arrayIndex].count = charCount(line[i], chrcats[arrayIndex]);
                 arrayIndex++;
            }
            arrayIndex = 0;
