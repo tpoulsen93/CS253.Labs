@@ -27,17 +27,27 @@ static ChrCats chrcats={
     {0, "My Last Name", "poulsenPOULSEN"},
     {0}};   //terminating 0
 
-void charCount(char targetChar, ChrCat category)
+void charCount(char targetChar, ChrCat &category)
 {
-    for (int i = 0; i < sizeof(category.chars)/sizeof(char); i++)
+/*    int categorySize = sizeof(category.chars) / sizeof(char);
+    for (int z = 0; z < categorySize; z++)
     {
-        if (targetChar == category.chars[i])
+        if (targetChar == category.chars[z])
              category.count++;
+    }
+*/
+    int z = 0;
+    while (*category.chars[z])
+    {
+        if (targetChar == *category.chars[z])
+            *category.count++;
+        z++;
     }
 }
 
 int main()
 {
+    int arrayIndex = 0;
     char *line = 0;
     size_t n = 0;
 
@@ -53,16 +63,18 @@ int main()
         //loop through character categories checking for their types and counting them
         for (int i = 0; i < length; i++)
         {
-           for (int c = 0; c < sizeof(chrcats)/sizeof(ChrCat); c++)
+           while (chrcats[arrayIndex].name)     //continue looping if category.name != 0
            {
-                charCount(line[i], chrcats[c]);
+                charCount(line[i], &chrcats[arrayIndex]);
+                arrayIndex++;
            }
         }
 
-        for (int b = 0; b < sizeof(chrcats)/sizeof(ChrCat); b++)
+        for (int b = 0; b < arrayIndex; b++)
         {
         printf("%s: %d\n",chrcats[b].name, chrcats[b].count);
         chrcats[b].count = 0;       //reset counters for next iteration
+        arrayIndex = 0;             //reset array loop counter for next iteration
         }
     }
     free(line);
