@@ -27,7 +27,7 @@ static ChrCats chrcats={
     {0, "My Last Name", "poulsenPOULSEN"},
     {0}};   //terminating 0
 
-void charCount(char targetChar, ChrCat &category)
+void charCount(char targetChar, ChrCat category)
 {
 /*    int categorySize = sizeof(category.chars) / sizeof(char);
     for (int z = 0; z < categorySize; z++)
@@ -37,10 +37,10 @@ void charCount(char targetChar, ChrCat &category)
     }
 */
     int z = 0;
-    while (*category.chars[z])
+    while (category.chars[z])
     {
-        if (targetChar == *category.chars[z])
-            *category.count++;
+        if (targetChar == category.chars[z])
+            category.count++;
         z++;
     }
 }
@@ -65,12 +65,13 @@ int main()
         {
            while (chrcats[arrayIndex].name)     //continue looping if category.name != 0
            {
-                charCount(line[i], &chrcats[arrayIndex]);
+                charCount(line[i], chrcats[arrayIndex]);
                 arrayIndex++;
            }
+           arrayIndex = 0;
         }
 
-        for (int b = 0; b < arrayIndex; b++)
+        for (int b = 0; b < sizeof(chrcats)/sizeof(ChrCat)-1; b++)
         {
         printf("%s: %d\n",chrcats[b].name, chrcats[b].count);
         chrcats[b].count = 0;       //reset counters for next iteration
