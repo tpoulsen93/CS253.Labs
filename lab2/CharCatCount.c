@@ -11,33 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct 
-{
-    int count;          //number of matches in category
-    char *name;         //name of category
-    char *chars;        //characters in category
-} ChrCat;
-
-typedef ChrCat ChrCats[];
-static ChrCats chrcats={
-    {0, "Upper Vowels", "AEIOU"},
-    {0, "Lower Vowels", "aeiou"},
-    {0, "My First Name", "taylorTAYLOR"},
-    {0, "My Last Name", "poulsenPOULSEN"},
-    {0}};   //terminating 0
-
-int charCount(char targetChar, ChrCat category)
-{
-    int z = 0;
-    while (category.chars[z])
-    {
-        if (targetChar == category.chars[z])
-            category.count++;
-        z++;
-    }
-    return category.count;
-}
+#include "CharCat.h"
 
 int main()
 {
@@ -62,16 +36,16 @@ int main()
                 chrcats[arrayIndex].count = charCount(line[i], chrcats[arrayIndex]);
                 arrayIndex++;
            }
-           arrayIndex = 0;
-        }
-
-        for (int b = 0; b < sizeof(chrcats)/sizeof(ChrCat)-1; b++)
-        {
-        printf("%s: %d\n",chrcats[b].name, chrcats[b].count);
-        chrcats[b].count = 0;       //reset counters for next iteration
-        arrayIndex = 0;             //reset array loop counter for next iteration
+           arrayIndex = 0;          //reset array loop counter for next iteration
         }
     }
+    
+    while (chrcats[arrayIndex].name != 0)
+    {
+        printf("%s: %d\n",chrcats[arrayIndex].name, chrcats[arrayIndex].count);
+        arrayIndex++;
+    }
+
     free(line);
     return 0;
 }
