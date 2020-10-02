@@ -13,4 +13,6 @@ extern ChrCats chrcats;
 
 extern int charCount(char targetChar, ChrCat category);
 
+extern char *countToString(ChrCat category);
+
 #endif

@@ -3,7 +3,8 @@
 //Date: Sepember 2020
 //Class: CS253
 //Professor: Jim Buffenbarger
-
+#include <stdlib.h>
+#include <stdio.h>
 #include "CharCat.h"
 
 ChrCats chrcats={
@@ -13,7 +14,7 @@ ChrCats chrcats={
     {0, "My Last Name", "poulsenPOULSEN"},
     {0}};   //terminating 0
 
-    //compare a char from line[i] to each char in a category and count matches
+//compare a char from line[i] to each char in a category and count matches
 int charCount(char targetChar, ChrCat category)
 {
     int z = 0;
@@ -24,4 +25,11 @@ int charCount(char targetChar, ChrCat category)
         z++;
     }
     return category.count;
+}
+
+char *countToString(ChrCat category)
+{
+    char *output;
+    asprintf(&output, "%s : %d", category.name, category.count);
+    return output;
 }

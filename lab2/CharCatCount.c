@@ -42,7 +42,9 @@ int main()
     
     while (chrcats[arrayIndex].name != 0)
     {
-        printf("%s: %d\n",chrcats[arrayIndex].name, chrcats[arrayIndex].count);
+        char *output = countToString(chrcats[arrayIndex]);
+        printf("%s\n", output);
+        free(output);
         arrayIndex++;
     }
 
