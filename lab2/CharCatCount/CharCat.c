@@ -3,6 +3,7 @@
 //Date: Sepember 2020
 //Class: CS253
 //Professor: Jim Buffenbarger
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "CharCat.h"
