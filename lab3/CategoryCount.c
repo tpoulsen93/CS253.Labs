@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     int HCCats = 3;    //number of hardcoded categories
     cats[0] = newCategory("Lowercase Vowels", "aeiou");
     cats[1] = newCategory("Lowercase Consonants", "bcdfghjklmnpqrstvwxyz");
-    cats[2] = newCategory("Letters", "a-z");
+    cats[2] = newCategory("Letters", "^a-z");
 
     //arg[0] is the program name so we have to start at 1
     int currentArg = 1;
