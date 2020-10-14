@@ -3,9 +3,14 @@
 //Class: CS253
 //Professor: Jim Buffenbarger
 
+
+#ifndef MAXCATS
+#define MAXCATS 10
+#endif
+
+
 #ifndef CATEGORY_H
 #define CATEGORY_H
-#define MAXCATS = 10;
 
 typedef struct {
 	int count;
@@ -13,12 +18,11 @@ typedef struct {
 	char *chars;
 }Category;
 
-typedef Category Categories[];
+typedef Category Categories[MAXCATS];
 
-extern Categories hardCodedCats;
 extern Categories cats;
 extern Category newCategory(char *name, char *chars);
 extern void CharCatCount2(char target, Category *kittens);
-extern char *CategoryToString(Category category);
+extern char* CategoryToString(Category category);
 
 #endif

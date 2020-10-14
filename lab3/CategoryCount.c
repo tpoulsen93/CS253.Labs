@@ -9,36 +9,37 @@
 #include "Category.h"
 #include "error.h"
 
-static char *progName;
+static char* progName;
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
+    if ((argc - 1) % 2)
+        exit(1);
+
     progName = argv[0];
 
-    char *line = 0;
+    char* line = 0;
     size_t n = 0;
 
-
-    if ((argc - 1) % 2)
-        errorDetected("Incorrect number of arguments.\tUsage: [<Name> <Characters>]\n");
-
-    int hccSize = 0;
-
-    //loop through hard coded categories adding them to the category array
-    for (int i = 0; hardCodedCats[i].name; i++)
-    {
-        cats[i] = hardCodedCats[i];
-        hccSize++;
-    }
+    int HCCats = 3;    //number of hardcoded categories
+    cats[0] = newCategory("Lowercase Vowels", "aeiou");
+    cats[1] = newCategory("Lowercase Consonants", "bcdfghjklmnpqrstvwxyz");
+    cats[2] = newCategory("Letters", "a-z");
 
     //arg[0] is the program name so we have to start at 1
     int currentArg = 1;
 
-    //loop through input categories adding them to the category array
-    for (int i = hccSize; i < argc; i++)
+    if((argc-1))
     {
-        cats[i] = newCategory(argv[currentArg], argv[currentArg+1]);
-        currentArg += 2;
+        int newCats = (argc-1)/2;
+        int totalCats = newCats+HCCats;
+
+        //loop through input categories adding them to the category array
+        for (int i = HCCats; i < totalCats; i++)
+        {
+            cats[i] = newCategory(argv[currentArg], argv[currentArg+1]);
+            currentArg += 2;
+        }
     }
 
     while (1)
