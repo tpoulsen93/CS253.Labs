@@ -19,7 +19,6 @@ typedef struct {
 }Category;
 
 typedef Category Categories[MAXCATS];
-
 extern Categories cats;
 extern Category newCategory(char *name, char *chars);
 extern void CharCatCount2(char target, Category *kittens);

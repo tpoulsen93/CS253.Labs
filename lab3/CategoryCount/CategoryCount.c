@@ -14,8 +14,8 @@ static char* progName;
 int main(int argc, char* argv[])
 {
     if ((argc - 1) % 2)
-        exit(1);
-
+        ERROR("Illegal parameter usage.\nUsage: [<CategoryName> <CategoryCharacters>...]");
+    
     progName = argv[0];
 
     char* line = 0;
@@ -28,19 +28,18 @@ int main(int argc, char* argv[])
 
     //arg[0] is the program name so we have to start at 1
     int currentArg = 1;
+    int newCats = (argc-1)/2;
+    int totalCats = newCats+HCCats;
 
-    if((argc-1))
-    {
-        int newCats = (argc-1)/2;
-        int totalCats = newCats+HCCats;
+    if (totalCats > MAXCATS)
+        ERROR("Too many categories added. Maximum additional categories: %d\n", MAXCATS-HCCats);
 
-        //loop through input categories adding them to the category array
+    if (newCats)        //loop through provided input categories adding them to the category array
         for (int i = HCCats; i < totalCats; i++)
         {
             cats[i] = newCategory(argv[currentArg], argv[currentArg+1]);
             currentArg += 2;
         }
-    }
 
     while (1)
     {

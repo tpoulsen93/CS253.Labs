@@ -28,10 +28,10 @@ void CharCatCount2(char target, Category* kittens)    //why call everything cats
 {
     for (int i = 0; kittens[i].name; i++)
     {
-        if (kittens[i].chars[0] != '^')         //check for capitalization folding
+        if (kittens[i].chars[0] != '^')         //no capitalization folding
         {    
             for (int j = 0; kittens[i].chars[j]; j++)
-                if (kittens[i].chars[j] != '-') //check for range identifier
+                if (kittens[i].chars[j] != '-') //no range identifier
                 {
                     if (target == kittens[i].chars[j])
                         kittens[i].count++;
@@ -43,7 +43,7 @@ void CharCatCount2(char target, Category* kittens)    //why call everything cats
         {
             for (int j = 1; kittens[i].chars[j]; j++)
             {
-                if (kittens[i].chars[j] != '-') //check for range identifier
+                if (kittens[i].chars[j] != '-') //no range identifier
                 {
                     if (kittens[i].chars[j] >= 'a' && kittens[i].chars[j] <= 'z')       //if value is lowercase, check against both cases
                     {
@@ -55,7 +55,7 @@ void CharCatCount2(char target, Category* kittens)    //why call everything cats
                         if (target == kittens[i].chars[j] || target == kittens[i].chars[j]+('a'-'A'))
                             kittens[i].count++;
                     }
-                    else    //if value is not an upper or lowercase letter, ignore folding, check like normal
+                    else    //if value is not a letter, ignore folding, check like normal
                         if (target == kittens[i].chars[j])
                             kittens[i].count++;
                 }
@@ -78,10 +78,9 @@ char* CategoryToString(Category category)
 void rangeCount(Category* kitten, char target, char first, char last)
 {
     if (first < last)
-    {
-        for (int i = first+1; i < last; i++)
-            if (target == (char)i)
-                kitten->count++;
+    {    
+        if (target < last && target > first)
+            kitten->count++;
     }
     else
     {
@@ -97,22 +96,21 @@ void foldedRangeCount(Category* kitten, char target, char first, char last)
 {
     if (first < last)
     {
-        for (int i = first+1; i < last; i++)
+        if (target >= 'a' && target <= 'z')         //target is lowercase, check against both cases
         {
-            if ((char)i >= 'a' && (char)i <= 'z')         //range value is lowercase, check against both cases
-            {
-                if (target == (char)i || target == (char)i-('a'-'A'))
-                    kitten->count++;
-            }
-            else if ((char)i >= 'A' && (char)i <= 'Z')    //range value is uppercase, check against both cases
-            {
-                if (target == (char)i || target == (char)i+('a'-'A'))
-                    kitten->count++;
-            }
-            else        //range value is not a letter. check like normal
-                if (target == (char)i)
-                    kitten->count++;
+            char fold = target - ('a'-'A');
+            if ((target > first && target < last) || (fold > first && fold < last))
+                kitten->count++;
         }
+        else if (target >= 'A' && target <= 'Z')    //target is uppercase, check against both cases
+        {
+            char fold = target + ('a'-'A');
+            if ((target > first && target < last) || (fold > first && fold < last))
+                kitten->count++;
+        }
+        else        //target is not a letter. ignore folding, check like normal
+            if (target < first && target > last)
+                kitten->count++;
     }
     else
     {
