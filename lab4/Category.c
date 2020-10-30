@@ -138,16 +138,15 @@ Category getCat(int i)
     return cats[i];
 }
 
-//get size of cats (# of categories in array)
-int getCatsSize()
-{
-    return currentIndex;
-}
-
 //return string representation of specific category
 char* catToString(Category kitty)
 {
     char* output;
     asprintf(&output, "%s : %d", kitty.name, kitty.count);
     return output;
+}
+
+void freeCats()
+{
+    free(cats);
 }
