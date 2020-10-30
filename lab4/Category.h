@@ -16,6 +16,8 @@ typedef struct {
 typedef Category* Categories;
 extern void addCategory(char *name, char *chars);
 extern void CharCatCount2(char target);
-extern void CategoryToString();
+extern Category getCat(int i);
+extern char* catToString(Category kitty);
+extern int getCatsSize();
 
 #endif

@@ -16,13 +16,13 @@ static int currentIndex = 0;
 static void rangeCount(Category* kitten, char target, char first, char last);
 static void foldedRangeCount(Category* kitten, char target, char first, char last);
 
+//add new category to category array
 void addCategory(char* name, char* characters)
 {
     Category newCategory;
     newCategory.count = 0;
     newCategory.name = name;
     newCategory.chars = characters;
-
 
     if (currentIndex == 0)         //array is empty
     {
@@ -43,6 +43,7 @@ void addCategory(char* name, char* characters)
     }
 }
 
+//count matching characters between input and category and update category.count accordingly
 void CharCatCount2(char target)
 {
     for (int i = 0; cats[i].name; i++)
@@ -131,13 +132,22 @@ void foldedRangeCount(Category* kitten, char target, char first, char last)
     } 
 }
 
-//create a neatly printable representation for the categories
-void printCategories()
+//get specific categories
+Category getCat(int i)
 {
-    for (int i = 0; i < currentIndex; i++)
-        printf("%s : %d\n", cats[i].name, cats[i].count);
+    return cats[i];
 }
 
-//------------------------------------------------------------------------------------------------
-//ask Jim about this print function and also about valgrind
-//--------------------------------------------------------------------------------------------------
+//get size of cats (# of categories in array)
+int getCatsSize()
+{
+    return currentIndex;
+}
+
+//return string representation of specific category
+char* catToString(Category kitty)
+{
+    char* output;
+    asprintf(&output, "%s : %d", kitty.name, kitty.count);
+    return output;
+}

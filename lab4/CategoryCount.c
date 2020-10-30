@@ -53,8 +53,13 @@ int main(int argc, char* argv[])
     }
 
     //loop through categories printing results
-    printCategories();
+    for (int i = 0; i < getCatsSize(); i++)
+    {
+        char* result = catToString(getCat(i));
+        printf("%s\n", result);
+        free(result);
+    }
     
     free(line);
-    return 0;
+    return 0;       //give os successful exit code
 }
