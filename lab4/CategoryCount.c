@@ -52,13 +52,8 @@ int main(int argc, char* argv[])
             CharCatCount2(line[i]);
     }
 
-    //loop through categories printing results
-    for (int i = 0; i < totalCats; i++)
-    {
-        char* result = catToString(getCat(i));
-        printf("%s\n", result);
-        free(result);
-    }
+    //print out results of category counting
+    printf("%s", catToString());
 
     freeCats();
     free(line);

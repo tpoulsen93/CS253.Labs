@@ -138,11 +138,19 @@ Category getCat(int i)
     return cats[i];
 }
 
-//return string representation of specific category
-char* catToString(Category kitty)
+//return string representation of all categories
+char* catToString()
 {
     char* output;
-    asprintf(&output, "%s : %d", kitty.name, kitty.count);
+    for (int i = 0; i < currentIndex; i++)
+    {
+        if (i == 0)                     //first category
+            asprintf(&output, "%s : %d", cats[i].name, cats[i].count);
+        else if (i == currentIndex-1)   //last category
+            asprintf(&output, "%s\n%s : %d\n", output, cats[i].name, cats[i].count);
+        else                            //middle categories   
+            asprintf(&output, "%s\n%s : %d", output, cats[i].name, cats[i].count);
+    }
     return output;
 }
 
