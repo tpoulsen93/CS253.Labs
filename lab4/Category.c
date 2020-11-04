@@ -24,19 +24,13 @@ void addCategory(char* name, char* characters)
     newCategory.name = name;
     newCategory.chars = characters;
 
-    if (currentIndex == 0)         //array is empty
-    {
-        cats = (Categories)malloc(sizeof(*cats));
-        cats[currentIndex] = newCategory;
-        currentIndex++;
-    }
-    else if ((currentIndex & (currentIndex-1)) == 0)   //current index is a power of 2 meaning arraysize needs to be doubled
+    if ((currentIndex & (currentIndex-1)) == 0)   //current index is a power of 2 meaning arraysize needs to be doubled
     {
         cats = (Categories)realloc(cats, sizeof(*cats)*2*currentIndex);
         cats[currentIndex] = newCategory;
         currentIndex++;
     }
-    else                //array has an available index
+    else        //array has an available index
     {
         cats[currentIndex] = newCategory;
         currentIndex++;
