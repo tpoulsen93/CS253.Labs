@@ -16,5 +16,6 @@ typedef struct {
 
 extern void CharCatCount3(Category cat, char target);
 extern Category newCategory(char* name, char* characters);
+extern char* catToString(Category cat);
 
 #endif

@@ -4,8 +4,10 @@
 //Professor: Jim Buffenbarger
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "Category.h"
 #include "stringy.h"
+#include "list.h"
 
 static void rangeCount(Category kitten, char target, char first, char last);
 static void foldedRangeCount(Category kitten, char target, char first, char last);
@@ -31,7 +33,7 @@ void CharCatCount3(Category cat, char target)
                     cat->count++;
             }
             else  //range identifier is detected:
-                rangeCount(&cat, target, cat->chars[j-1], cat->chars[j+1]);  
+                rangeCount(cat, target, cat->chars[j-1], cat->chars[j+1]);  
     }
     else          //capitalization folding is detected:
     {
@@ -54,7 +56,7 @@ void CharCatCount3(Category cat, char target)
                         cat->count++;
             }
             else    //range identifier detected:
-                foldedRangeCount(&cat, target, cat->chars[j-1], cat->chars[j+1]);
+                foldedRangeCount(cat, target, cat->chars[j-1], cat->chars[j+1]);
         }
     }
 }
@@ -105,10 +107,16 @@ void foldedRangeCount(Category kitten, char target, char first, char last)
     } 
 }
 
-
 char* catToString(Category cat)
 {
     char* str;
     asprintf(&str, "%s : %d", cat->name, cat->count);
     return str;
 }
+/*
+void freeCat(Category cat)
+{
+    free(cat->chars);
+    free(cat->count);
+    free(cat->name);
+}*/

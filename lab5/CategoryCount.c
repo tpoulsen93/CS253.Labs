@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Category.h"
+#include "Categories.h"
 #include "error.h"
 
 static char* progName;
@@ -49,13 +50,15 @@ int main(int argc, char* argv[])
 
         //loop through input characters checking for matches in categories
         for (int i = 0; i < length; i++)
-            CharCatCount2(line[i]);
+        {
+            count(line[i]);
+        }
     }
 
     //print out results of category counting
-    printf("%s", catToString());
+    printf("%s", catsToString());
 
-    freeCats();
-    free(line);
+    //freeCats();
+    //free(line);
     return 0;       //give OS successful exit code
 }
