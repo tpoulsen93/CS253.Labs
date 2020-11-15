@@ -12,7 +12,8 @@
 static void rangeCount(Category kitten, char target, char first, char last);
 static void foldedRangeCount(Category kitten, char target, char first, char last);
 
-Category newCategory(char* name, char* characters)
+//allocate and initialize a new Category
+extern Category newCategory(char* name, char* characters)
 {
     Category newCategory = (Category)malloc(sizeof(*newCategory));
     newCategory->count = 0;
@@ -22,7 +23,7 @@ Category newCategory(char* name, char* characters)
 }
 
 //count matching characters between input and category and update category.count accordingly
-void CharCatCount3(Category cat, char target)
+extern void CharCatCount3(Category cat, char target)
 {
     if (cat->chars[0] != '^')         //no capitalization folding
     {    
@@ -107,16 +108,18 @@ void foldedRangeCount(Category kitten, char target, char first, char last)
     } 
 }
 
-char* catToString(Category cat)
+//print string representation of a single Category
+extern char* catToString(Category cat)
 {
     char* str;
     asprintf(&str, "%s : %d", cat->name, cat->count);
     return str;
 }
-/*
-void freeCat(Category cat)
+
+//free each element of a Category
+extern void freeCat(Category cat)
 {
-    free(cat->chars);
-    free(cat->count);
-    free(cat->name);
-}*/
+    //free(cat->chars);
+    //free(cat->name);
+    free(cat);
+}

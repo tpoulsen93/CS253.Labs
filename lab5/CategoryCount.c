@@ -58,7 +58,10 @@ int main(int argc, char* argv[])
     //print out results of category counting
     printf("%s", catsToString());
 
-    //freeCats();
-    //free(line);
-    return 0;       //give OS successful exit code
+    //free everything allocated on the heap
+    freeCats();
+    free(line);
+
+    //give OS successful exit code
+    return 0;       
 }
