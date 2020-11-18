@@ -23,24 +23,21 @@ void addCategory(char* name, char* characters)
     newCategory.count = 0;
     newCategory.name = name;
     newCategory.chars = characters;
-
-    if ((currentIndex & (currentIndex-1)) == 0)   //current index is a power of 2 meaning arraysize needs to be doubled
-    {
+    
+    if (currentIndex == 0)
+        cats = (Categories)malloc(sizeof(Category));
+    else if ((currentIndex & (currentIndex-1)) == 0)   //current index is a power of 2 meaning arraysize needs to be doubled
         cats = (Categories)realloc(cats, sizeof(*cats)*2*currentIndex);
-        cats[currentIndex] = newCategory;
-        currentIndex++;
-    }
-    else        //array has an available index
-    {
-        cats[currentIndex] = newCategory;
-        currentIndex++;
-    }
+    //else currentIndex is available
+
+    cats[currentIndex] = newCategory;
+    currentIndex++;
 }
 
 //count matching characters between input and category and update category.count accordingly
 void CharCatCount2(char target)
 {
-    for (int i = 0; cats[i].name; i++)
+    for (int i = 0; i < currentIndex; i++)
     {
         if (cats[i].chars[0] != '^')         //no capitalization folding
         {    
@@ -129,14 +126,22 @@ void foldedRangeCount(Category* kitten, char target, char first, char last)
 //get specific categories
 Category getCat(int i)
 {
-    return cats[i];
+    if (i <currentIndex)
+        return cats[i];
+    else
+        return (Category){0, '\0', '\0'};    
+        
 }
 
 //return string representation of all categories
-char* catToString()
+char* catToString(Category kitty)
 {
     char* output;
-    for (int i = 0; i < currentIndex; i++)
+    asprintf(&output, "%s : %d", kitty.name, kitty.count);
+    return output;
+
+    //I need to work on this one to see if I can get it to work right... have to figure out how to free strings as I go...
+    /*for (int i = 0; i < currentIndex; i++)
     {
         if (i == 0)                     //first category
             asprintf(&output, "%s : %d", cats[i].name, cats[i].count);
@@ -144,8 +149,8 @@ char* catToString()
             asprintf(&output, "%s\n%s : %d\n", output, cats[i].name, cats[i].count);
         else                            //middle categories   
             asprintf(&output, "%s\n%s : %d", output, cats[i].name, cats[i].count);
-    }
-    return output;
+    
+    }*/
 }
 
 void freeCats()

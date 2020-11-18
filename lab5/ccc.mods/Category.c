@@ -119,7 +119,7 @@ extern char* catToString(Category cat)
 //free each element of a Category
 extern void freeCat(Category cat)
 {
-    //free(cat->chars);
-    //free(cat->name);
+    free(cat->chars);
+    free(cat->name);
     free(cat);
 }

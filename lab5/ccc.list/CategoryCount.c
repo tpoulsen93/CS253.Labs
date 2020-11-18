@@ -44,14 +44,14 @@ int main(int argc, char* argv[])
     }
 
     //print out results of category counting
-    for (int i = 0; getCat(i).name; i++)
-    {
-        char* str = catToString(getCat(i));
-        printf("%s\n", str);
-        free(str);
-    }
+    char* catCount = catToString();
+    printf("%s", catCount);
+    free(catCount);
     
+    //free the list
     freeCats();
     free(line);
-    return 0;       //give OS successful exit code
+
+    //give OS successful exit code
+    return 0;
 }

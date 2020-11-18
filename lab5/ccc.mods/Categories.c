@@ -3,8 +3,8 @@
 //Class: CS253
 //Professor: Jim Buffenbarger
 
-#include "stdlib.h"
-#include "stdio.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include "Categories.h"
 #include "Category.h"
 #include "list.h"
@@ -42,6 +42,5 @@ extern void freeCats()
 {
     for (List tmp = cats; tmp; tmp = cdr(tmp))
         freeCat((Category)car(tmp));
-    //freedata(cats);
-    //freelist(cats);
+    freelist(cats);
 }
