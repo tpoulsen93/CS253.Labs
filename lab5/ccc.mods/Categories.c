@@ -12,35 +12,37 @@
 static List cats = 0;
 
 //add new category to category array
-extern void addCategory(char* name, char* characters)
+void addCategory(char* name, char* characters)
 {
     cats = cons(newCategory(name, characters), cats);
 }
 
 //loop through List cats counting how many matches there are in each category
-extern void count(char target)
+void count(char target)
 {
     for (List tmp = cats; tmp; tmp = cdr(tmp))
         CharCatCount3(car(tmp), target);
 }
 
 //return string representation of all categories
-extern char* catsToString()
+char* catsToString()
 {
-    char* output;
-    for (List tmp = cats; tmp; tmp = cdr(tmp))
-        if (output)
-            asprintf(&output, "%s\n%s", catToString((Category)car(tmp)), output);
-        else
-            asprintf(&output, "%s\n", catToString((Category)car(tmp)));
-        
-    return output;
+    char* output = (char*)malloc(sizeof(*output));
+    char* terminator = "";
+    for (List list = cats; list; list = cdr(list))
+    {
+        if (!cdr(list))
+            terminator = "\n";
+        Category tmp = car(list);
+        char* oldOutput = output;
+        asprintf(&output, "%s\n%s : %d%s", output, tmp->name, tmp->count, terminator);
+        free(oldOutput);
+    }
+    return output;  
 }
 
 //change this one
-extern void freeCats()
+void freeCats()
 {
-    for (List tmp = cats; tmp; tmp = cdr(tmp))
-        freeCat((Category)car(tmp));
-    freelist(cats);
+    freedata(cats);
 }

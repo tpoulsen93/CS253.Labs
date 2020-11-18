@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "Category.h"
 #include "Categories.h"
 #include "error.h"
 
@@ -22,22 +21,13 @@ int main(int argc, char* argv[])
     char* line = 0;
     size_t n = 0;
 
-    int HCCats = 3;    //number of hardcoded categories
     addCategory("Lowercase Vowels", "aeiou");
     addCategory("Lowercase Consonants", "bcdfghjklmnpqrstvwxyz");
     addCategory("Letters", "^a-z");
 
-    //arg[0] is the program name so we have to start at 1
-    int currentArg = 1;
-    int newCats = (argc-1)/2;
-    int totalCats = newCats+HCCats;
-
-    if (newCats)        //loop through provided input categories adding them to the category array
-        for (int i = HCCats; i < totalCats; i++)
-        {
+    if (argc - 1)        //loop through provided input categories adding them to the category array
+        for (int currentArg = 1; argv[currentArg]; currentArg += 2)
             addCategory(argv[currentArg], argv[currentArg+1]);
-            currentArg += 2;
-        }
 
     while (1)
     {
@@ -56,9 +46,11 @@ int main(int argc, char* argv[])
     }
 
     //print out results of category counting
-    printf("%s", catsToString());
+    char* catCount = catsToString();
+    printf("%s", catCount);
 
     //free everything allocated on the heap
+    free(catCount);
     freeCats();
     free(line);
 

@@ -13,9 +13,8 @@ typedef struct {
 	char *chars;
 } *Category;
 
-Category newCategory(char* name, char* characters);
-void CharCatCount3(Category cat, char target);
-char* catToString(Category cat);
-void freeCat(Category cat);
+extern Category newCategory(char* name, char* characters);
+extern void CharCatCount3(Category cat, char target);
+extern char* catToString(Category cat);
 
 #endif

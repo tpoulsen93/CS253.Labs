@@ -46,9 +46,9 @@ int main(int argc, char* argv[])
     //print out results of category counting
     char* catCount = catToString();
     printf("%s", catCount);
-    free(catCount);
     
-    //free the list
+    //free everything that has been allocated on the heap
+    free(catCount);
     freeCats();
     free(line);
 

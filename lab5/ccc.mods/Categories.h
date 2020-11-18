@@ -6,9 +6,9 @@
 #ifndef CATEGORIES_H
 #define CATEGORIES_H
 
-void addCategory(char* name, char* chars);
-void freeCats();
-void count(char target);
-char* catsToString();
+extern void addCategory(char* name, char* chars);
+extern void freeCats();
+extern void count(char target);
+extern char* catsToString();
 
 #endif
