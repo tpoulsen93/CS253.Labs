@@ -115,15 +115,17 @@ void foldedRangeCount(Category kitten, char target, char first, char last)
 //return string representation of all categories
 char* catToString()
 {
+    char terminator = '\0';
     char* output = (char*)malloc(sizeof(*output));
-    char* terminator = "";
     for (List list = cats; list; list = cdr(list))
     {
-        if (!cdr(list))
-            terminator = "\n";
+	    if (!cdr(list))
+		    terminator = '\n';
+            
         Category tmp = car(list);
         char* oldOutput = output;
-        asprintf(&output, "%s\n%s : %d%s", output, tmp->name, tmp->count, terminator);
+
+        asprintf(&output, "%s : %d\n%s%c", tmp->name, tmp->count, output, terminator);
         free(oldOutput);
     }
     return output;

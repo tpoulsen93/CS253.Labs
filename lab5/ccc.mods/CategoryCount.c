@@ -21,13 +21,18 @@ int main(int argc, char* argv[])
     char* line = 0;
     size_t n = 0;
 
-    addCategory("Lowercase Vowels", "aeiou");
-    addCategory("Lowercase Consonants", "bcdfghjklmnpqrstvwxyz");
-    addCategory("Letters", "^a-z");
+    //Initialize new data structures
+    ChrCats hCats = newList();  //hardcoded Cats
+    ChrCats cCats = newList();  //commandline cats    
 
-    if (argc - 1)        //loop through provided input categories adding them to the category array
+    //add hardcoded categories to their structure
+    cCats = addCategory(cCats, "Lowercase Vowels", "aeiou");
+    cCats = addCategory(cCats, "Lowercase Consonants", "bcdfghjklmnpqrstvwxyz");
+    cCats = addCategory(cCats, "Letters", "^a-z");
+
+    if (argc - 1)   //loop through provided input categories adding them to their structure
         for (int currentArg = 1; argv[currentArg]; currentArg += 2)
-            addCategory(argv[currentArg], argv[currentArg+1]);
+            cCats = addCategory(cCats, argv[currentArg], argv[currentArg+1]);
 
     while (1)
     {
@@ -41,17 +46,21 @@ int main(int argc, char* argv[])
         //loop through input characters checking for matches in categories
         for (int i = 0; i < length; i++)
         {
-            count(line[i]);
+            count(hCats, line[i]);
+            count(cCats, line[i]);
         }
     }
 
     //print out results of category counting
-    char* catCount = catsToString();
-    printf("%s", catCount);
+    char* hCatStr = catsToString(hCats);
+    char* cCatStr = catsToString(cCats);
+    printf("%s%s", hCatStr, cCatStr);
 
     //free everything allocated on the heap
-    free(catCount);
-    freeCats();
+    free(hCatStr);
+    free(cCatStr);
+    freeCats(hCats);
+    freeCats(cCats);
     free(line);
 
     //give OS successful exit code

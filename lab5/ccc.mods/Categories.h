@@ -6,9 +6,12 @@
 #ifndef CATEGORIES_H
 #define CATEGORIES_H
 
-extern void addCategory(char* name, char* chars);
-extern void freeCats();
-extern void count(char target);
-extern char* catsToString();
+typedef void* ChrCats;
+
+extern ChrCats newList();
+extern ChrCats addCategory(ChrCats cats, char* name, char* chars);
+extern void count(ChrCats cats, char target);
+extern char* catsToString(ChrCats cats);
+extern void freeCats(ChrCats cats);
 
 #endif

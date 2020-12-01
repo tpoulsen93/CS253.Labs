@@ -9,66 +9,66 @@
 #include "stringy.h"
 #include "list.h"
 
-static void rangeCount(Category kitten, char target, char first, char last);
-static void foldedRangeCount(Category kitten, char target, char first, char last);
+static void rangeCount(Category this, char target, char first, char last);
+static void foldedRangeCount(Category this, char target, char first, char last);
 
 //allocate and initialize a new Category
 Category newCategory(char* name, char* characters)
 {
-    Category newCategory = (Category)malloc(sizeof(*newCategory));
-    newCategory->count = 0;
-    newCategory->name = name;
-    newCategory->chars = characters;
-    return newCategory;
+    Category this = (Category)malloc(sizeof(*this));
+    this->count = 0;
+    this->name = name;
+    this->chars = characters;
+    return this;
 }
 
 //count matching characters between input and category and update category.count accordingly
-void CharCatCount3(Category cat, char target)
+void CharCatCount3(Category this, char target)
 {
-    if (cat->chars[0] != '^')         //no capitalization folding
+    if (this->chars[0] != '^')         //no capitalization folding
     {    
-        for (int j = 0; cat->chars[j]; j++)
-            if (cat->chars[j] != '-') //no range identifier
+        for (int j = 0; this->chars[j]; j++)
+            if (this->chars[j] != '-') //no range identifier
             {
-                if (target == cat->chars[j])
-                    cat->count++;
+                if (target == this->chars[j])
+                    this->count++;
             }
             else  //range identifier is detected:
-                rangeCount(cat, target, cat->chars[j-1], cat->chars[j+1]);  
+                rangeCount(this, target, this->chars[j-1], this->chars[j+1]);  
     }
     else          //capitalization folding is detected:
     {
-        for (int j = 1; cat->chars[j]; j++)
+        for (int j = 1; this->chars[j]; j++)
         {
-            if (cat->chars[j] != '-') //no range identifier
+            if (this->chars[j] != '-') //no range identifier
             {
-                if (cat->chars[j] >= 'a' && cat->chars[j] <= 'z')       //if value is lowercase, check against both cases
+                if (this->chars[j] >= 'a' && this->chars[j] <= 'z')       //if value is lowercase, check against both cases
                 {
-                    if (target == cat->chars[j] || target == cat->chars[j]-('a'-'A'))
-                        cat->count++;
+                    if (target == this->chars[j] || target == this->chars[j]-('a'-'A'))
+                        this->count++;
                 }
-                else if (cat->chars[j] >= 'A' && cat->chars[j] <= 'Z')  //if value is uppercase, check against both cases 
+                else if (this->chars[j] >= 'A' && this->chars[j] <= 'Z')  //if value is uppercase, check against both cases 
                 {
-                    if (target == cat->chars[j] || target == cat->chars[j]+('a'-'A'))
-                        cat->count++;
+                    if (target == this->chars[j] || target == this->chars[j]+('a'-'A'))
+                        this->count++;
                 }
                 else    //if value is not a letter, ignore folding, check like normal
-                    if (target == cat->chars[j])
-                        cat->count++;
+                    if (target == this->chars[j])
+                        this->count++;
             }
             else    //range identifier detected:
-                foldedRangeCount(cat, target, cat->chars[j-1], cat->chars[j+1]);
+                foldedRangeCount(this, target, this->chars[j-1], this->chars[j+1]);
         }
     }
 }
 
 //check and count for characters in a given range (first char in range must be less than last char in range)
-void rangeCount(Category kitten, char target, char first, char last)
+void rangeCount(Category this, char target, char first, char last)
 {
     if (first < last)
     {    
         if (target < last && target > first)
-            kitten->count++;
+            this->count++;
     }
     else
     {
@@ -80,7 +80,7 @@ void rangeCount(Category kitten, char target, char first, char last)
 
 //check and count for characters in a given range with capitalization folding
 //first char in range must be less than last char in range  -  FOLDING ONLY WORKS FOR LETTERS
-void foldedRangeCount(Category kitten, char target, char first, char last)
+void foldedRangeCount(Category this, char target, char first, char last)
 {
     if (first < last)
     {
@@ -88,17 +88,17 @@ void foldedRangeCount(Category kitten, char target, char first, char last)
         {
             char fold = target - ('a'-'A');
             if ((target > first && target < last) || (fold > first && fold < last))
-                kitten->count++;
+                this->count++;
         }
         else if (target >= 'A' && target <= 'Z')    //target is uppercase, check against both cases
         {
             char fold = target + ('a'-'A');
             if ((target > first && target < last) || (fold > first && fold < last))
-                kitten->count++;
+                this->count++;
         }
         else        //target is not a letter. ignore folding, check like normal
             if (target < first && target > last)
-                kitten->count++;
+                this->count++;
     }
     else
     {
@@ -109,9 +109,9 @@ void foldedRangeCount(Category kitten, char target, char first, char last)
 }
 
 //print string representation of a single Category
-char* catToString(Category cat)
+char* catToString(Category this)
 {
     char* str;
-    asprintf(&str, "%s : %d", cat->name, cat->count);
+    asprintf(&str, "%s : %d", this->name, this->count);
     return str;
 }

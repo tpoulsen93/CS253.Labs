@@ -3,7 +3,6 @@
 //Class: CS253
 //Professor: Jim Buffenbarger
 
-
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
