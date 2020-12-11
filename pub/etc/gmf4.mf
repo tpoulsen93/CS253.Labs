@@ -1,0 +1,7 @@
+prg:=gcd
+
+$(prg): $(prg).o
+	gcc -o $@ $<
+
+%.o: %.c
+	gcc -c $<

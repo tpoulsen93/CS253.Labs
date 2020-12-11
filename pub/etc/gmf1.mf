@@ -1,0 +1,5 @@
+gcd: gcd.o
+	gcc -o gcd gcd.o
+
+gcd.o: gcd.c
+	gcc -c gcd.c

@@ -1,0 +1,5 @@
+gcd: gcd.o
+	gcc -o $@ $<
+
+%.o: %.c
+	gcc -c $<

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -x
+
+gcc -fPIC -c String.c
+gcc -fPIC -c GenTab.c
+gcc -fPIC -c TryString.c
+
+gcc -o libmylib.so -shared GenTab.o String.o
+
+gcc -o TryString2 TryString.o -L. -lmylib
+
+LD_LIBRARY_PATH=$PWD ./TryString2

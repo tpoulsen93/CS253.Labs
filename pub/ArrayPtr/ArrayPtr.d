@@ -1,0 +1,1 @@
+ArrayPtr.o: ArrayPtr.c

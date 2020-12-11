@@ -1,0 +1,58 @@
+\documentclass{article}[fleqn]
+\usepackage{graphicx,tabulary,array,multirow,soul}
+\begin{document}
+
+\begin{center}
+  \large\bf Why \texttt{cols} is Required, But \texttt{rows} is Not
+\end{center}
+
+\vspace*{8ex}
+
+\noindent
+For:
+\begin{verbatim}
+    extern void pr(int rows, int cols, int a[rows][cols]);
+
+    rows = 3
+    cols = 4
+
+    row = 1
+    col = 2
+\end{verbatim}
+
+\noindent
+To calculate the offset of the indexed element from the
+start of the array:
+\begin{verbatim}
+    &a[row][col] == a+row*cols+col
+                 == a+1*4+2
+                 == a+6
+\end{verbatim}
+
+\vspace{5ex}
+
+\begin{tabulary}{4in}{LR|R|R|R|R|}
+\multirow{6}{*}{\rotatebox[x=8ex]{90}{\so{\texttt{rows}}}} &
+  \multicolumn{1}{l}{} &
+  \multicolumn{4}{c}{\so{\texttt{cols}}} \\
+\multicolumn{1}{r}{} &
+\multicolumn{1}{r}{} &
+\multicolumn{1}{r}{\emph{0}} &
+\multicolumn{1}{r}{\emph{1}} &
+\multicolumn{1}{r}{\emph{2}} &
+\multicolumn{1}{r}{\emph{3}} \\
+\cline{3-6}
+& \emph{0} &  0 & 1 & 2 & 3 \\
+\cline{3-6}
+& \emph{1} &  4 & 5 & \underline{6} & 7 \\
+\cline{3-6}
+& \emph{2} &  8 & 9 & 10 & 11 \\
+\cline{3-6}
+\end{tabulary}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

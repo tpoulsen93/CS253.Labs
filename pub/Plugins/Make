@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -x
+
+gcc -c main.c
+gcc -o main main.o -ldl
+
+gcc -fPIC -c plugin0.c
+gcc -o libplugin0.so -shared plugin0.o
+
+gcc -fPIC -c plugin1.c
+gcc -o libplugin1.so -shared plugin1.o
+
+LD_LIBRARY_PATH=$PWD ./main
+

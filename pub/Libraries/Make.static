@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -x
+
+gcc -c String.c
+gcc -c GenTab.c
+gcc -c TryString.c
+
+ar rcs libmylib.a GenTab.o String.o
+
+gcc -o TryString1 TryString.o -static -L. -lmylib
+
+./TryString1
+nm GenTab.o | grep gtNew
+nm TryString.o | grep gtNew
+nm TryString1 | grep gtNew
+nm TryString.o | grep newString
+nm TryString1 | grep newString
