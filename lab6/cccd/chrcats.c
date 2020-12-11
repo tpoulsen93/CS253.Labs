@@ -9,17 +9,18 @@
 
 static void chrcats_addcat(ChrCats this, char *name, char *chrs) 
 {
-    this = cons(newCategory(name, chrs), this);
+    this->rep = (ChrCats)cons((List)newCategory(name, chrs), this->rep);
 }
 static void chrcats_add(ChrCats this, char c)
 {
-    for (List tmp = this; tmp; tmp = cdr(tmp))
-        CharCatCount3(car(tmp), c);
+    for (List list = this->rep; list; list = cdr(list))
+        CharCatCount3(car(list), c);
 }
 static char *chrcats_toString(ChrCats this)
 {
-    char* output = (char*)malloc(sizeof(*output));
-    for (List list = this; list; list = cdr(list))
+	//create a sufficiently big char* (hopefully)
+    char* output = (char*)malloc(sizeof(char[50]));
+    for (List list = this->rep; list; list = cdr(list))
     {
         //make necessary assignments
         Category tmp = car(list);
@@ -37,7 +38,7 @@ static char *chrcats_toString(ChrCats this)
 }
 static void chrcats_free(ChrCats this)
 {
-    freedata(this);
+    freedata((List)this->rep);
 }
 
 extern ChrCats chrcats_new()

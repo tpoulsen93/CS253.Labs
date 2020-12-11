@@ -1,0 +1,44 @@
+You will need two windows. Let's call them the ClientWindow
+and the ServerWindow.
+
+Start in the ServerWindow:
+
+    ServerWindow$ make
+    make: 'cccd' is up to date.
+    ServerWindow$ ./cccd
+    ServerWindow$ pgrep cccd
+    479062
+    ServerWindow$ gdb -p 479062
+    GNU gdb (GDB) Fedora 9.1-6.fc32
+    ...
+    (gdb) b cmd_single
+    Breakpoint 1 at 0x40256c: file cmd_single.c, line 114.
+    (gdb) c
+    Continuing.
+
+Then, in the ClientWindow:
+
+    ClientWindow$ ./client.sh
+
+In the ServerWindow, you'll see:
+
+    Breakpoint 1, cmd_single (fpp=0x100e2a0) at cmd_single.c:114
+    114	  List strings=0;
+    (gdb)
+
+at which point, you can continue debugging in the ServerWindow:
+
+    (gdb) l
+    109	 *                                                                         *
+    110	 * Arguments:                                                              *
+    111	 *     - fpp: file-pointer pair                                            *
+    112	 ***************************************************************************/
+    113	extern void cmd_single(FPP* fpp) {
+    114	  List strings=0;
+    115	  ChrCats ccs=chrcats_new();
+    116	  int done=0;
+    117	  while (!done) {
+    118	    char *s=0;
+    (gdb)
+
+and so on.

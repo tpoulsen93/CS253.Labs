@@ -21,4 +21,8 @@ extern void cmd_thread(FPP* fpp) {
   cmd_single(fpp);
   pthread_sigmask(SIG_SETMASK,&old,0);
   pthread_attr_destroy(&attr);
+
+  //pthread_t* thread;
+  //pthread_create(thread, 0, cmd_single(fpp), (void*)(long)1);
+  //-------------  this is boggling my mind, I tap :'(  ------------------
 }

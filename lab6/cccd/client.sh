@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Open()  { exec {fd}<>/dev/tcp/localhost/$((UID+234)) ; }
+Open()  { exec {fd}<>/dev/tcp/localhost/$(<port) ; }
 Close() { exec {fd}<&- ; }
 
 Open

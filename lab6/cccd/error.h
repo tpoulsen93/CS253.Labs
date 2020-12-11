@@ -9,6 +9,7 @@
   fprintf(stderr,"%s: ",kind);                \
   fprintf(stderr,args);                       \
   fprintf(stderr,"\n");                       \
+  fflush(stderr);                             \
 } while (0)
 
 #define ERRORLOC(file,line,kind,args...) do { \

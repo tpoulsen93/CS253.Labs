@@ -111,7 +111,7 @@ void foldedRangeCount(Category this, char target, char first, char last)
 //print string representation of a single Category
 char* catToString(Category this)
 {
-    char* str;
+	char* str;
     asprintf(&str, "%s : %d", this->name, this->count);
     return str;
 }

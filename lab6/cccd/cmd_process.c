@@ -6,5 +6,8 @@
 #include "cmd_single.h"
 
 extern void cmd_process(FPP* fpp) {
-  cmd_single(fpp);
+  if (fork())
+    fpp_close(fpp);
+  else
+    cmd_single(fpp);
 }

@@ -50,7 +50,7 @@ char* catsToString(ChrCats cats)
     return output;  
 }
 
-//change this one
+//free data in category
 void freeCats(ChrCats cats)
 {
     freedata(cats);
